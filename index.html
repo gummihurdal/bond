@@ -215,6 +215,23 @@
     font-size:.94rem;color:var(--ink-soft);
   }
   .why .inner b{color:var(--ink);font-style:italic;font-weight:500;}
+  .why-insight{margin:0;}
+  .ex-label{
+    font-family:var(--display);font-size:.7rem;font-weight:600;
+    text-transform:uppercase;letter-spacing:.16em;color:var(--clay);
+    margin:13px 0 7px;display:flex;align-items:center;gap:8px;
+  }
+  .ex-label::after{content:"";flex:1;height:1px;background:var(--line);}
+  .ex-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px;}
+  .ex-list li{
+    position:relative;padding:7px 11px 7px 26px;
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:8px;font-size:.9rem;line-height:1.5;color:var(--ink-soft);
+  }
+  .ex-list li::before{
+    content:"";position:absolute;left:11px;top:13px;
+    width:6px;height:6px;border-radius:50%;background:var(--gold);
+  }
 
   /* ---------- reflection ---------- */
   .reflect{
@@ -451,83 +468,233 @@
   var CATS = [
     { t:"Friendship base", items:[
       { l:"a", x:"Ask one curious question about her day",
-        w:"Gottman's research shows enduring couples keep detailed <b>love maps</b> — a constantly updated knowledge of each other's inner world. A genuine question is how that map stays current; it signals she still matters to you." },
+        w:"Gottman's research shows enduring couples keep detailed <b>love maps</b> — a constantly updated knowledge of each other's inner world. A genuine question is how that map stays current; it signals she still matters to you.",
+        ex:[
+          "Over dinner you ask what the best part of her day was; she lights up describing a small win you'd never have heard about otherwise.",
+          "Instead of \u201chow was work,\u201d you ask \u201chow did the presentation go\u201d — and she feels you were actually tracking her week.",
+          "A simple \u201cwhat's been on your mind lately\u201d surfaces a worry she had been quietly carrying alone."
+        ] },
       { l:"b", x:"Note something new about her inner world",
-        w:"Partners who keep learning about each other resist the <b>'I already know you'</b> trap. Assuming you've finished discovering someone is where quiet distance begins." },
+        w:"Partners who keep learning about each other resist the <b>'I already know you'</b> trap. Assuming you've finished discovering someone is where quiet distance begins.",
+        ex:[
+          "You notice she's started caring about a cause she never used to mention, and ask about it instead of assuming her views.",
+          "She reacts unexpectedly to a film; you treat it as a fresh clue to who she is now, not who she was five years ago.",
+          "Her taste in music has shifted — you let that update your picture of her rather than teasing her about the old days."
+        ] },
       { l:"c", x:"Respond to small bids instead of half-ignoring",
-        w:"Gottman found masters turn toward bids for attention about <b>86% of the time</b>, versus 33% for couples who later separated. These micro-moments compound into the felt sense of being chosen." }
+        w:"Gottman found masters turn toward bids for attention about <b>86% of the time</b>, versus 33% for couples who later separated. These micro-moments compound into the felt sense of being chosen.",
+        ex:[
+          "She says \u201clook at that sunset\u201d — you actually look and share the moment instead of nodding at your phone.",
+          "She sighs while reading the news; you ask what's wrong rather than tuning it out.",
+          "She shows you something small that made her laugh; a genuine laugh back tells her the little things still land with you."
+        ] }
     ]},
     { t:"Master conflict", items:[
       { l:"a", x:"Pause before reacting",
-        w:"The first three minutes of a disagreement strongly predict how it ends. A pause stops a <b>flooded nervous system</b> from hijacking words you can't take back." },
+        w:"The first three minutes of a disagreement strongly predict how it ends. A pause stops a <b>flooded nervous system</b> from hijacking words you can't take back.",
+        ex:[
+          "Her comment stings; you take a breath before answering, and the reply that comes out is the one you'd have wanted to give.",
+          "You feel your chest tighten and say \u201cgive me a minute\u201d — the fight never reaches the place it usually does.",
+          "Instead of firing back the obvious retort, you wait three seconds and ask a question instead."
+        ] },
       { l:"b", x:"Make one repair attempt mid-disagreement",
-        w:"Repair attempts are the single biggest difference between stable and unstable couples. Their <b>content matters less than their presence</b> — even a clumsy 'let me try that again' works." },
+        w:"Repair attempts are the single biggest difference between stable and unstable couples. Their <b>content matters less than their presence</b> — even a clumsy 'let me try that again' works.",
+        ex:[
+          "Mid-argument you say \u201cI think we're actually on the same side here\u201d — and feel the temperature drop.",
+          "You make a small, gentle joke about how absurd the fight has become; she half-smiles, and you both reset.",
+          "You ask \u201ccan I try saying that again, better?\u201d — and she lets you, because you offered."
+        ] },
       { l:"c", x:"End hard talks with one point of agreement",
-        w:"Closing on common ground prevents the <b>unresolved residue</b> that quietly accumulates into resentment over months." }
+        w:"Closing on common ground prevents the <b>unresolved residue</b> that quietly accumulates into resentment over months.",
+        ex:[
+          "After a hard money talk you both agree \u201cwe want the same future\u201d — the problem stays, the bond doesn't crack.",
+          "You close with \u201cwe haven't solved this, but I'm glad we talked\u201d — and she sleeps feeling like a teammate.",
+          "You name the one thing you did agree on, so the conversation doesn't end on its sharpest note."
+        ] }
     ]},
     { t:"Responsiveness", items:[
       { l:"a", x:"Reflect back what she said before replying",
-        w:"Feeling <b>understood</b> matters more than being agreed with. Reflecting proves you actually received her — the core of perceived partner responsiveness." },
+        w:"Feeling <b>understood</b> matters more than being agreed with. Reflecting proves you actually received her — the core of perceived partner responsiveness.",
+        ex:[
+          "Before defending yourself you say \u201cso you felt left out when I made plans without asking\u201d — and she visibly relaxes.",
+          "You put her point in your own words; she says \u201cyes, exactly\u201d — and the talk moves forward instead of in circles.",
+          "She vents about her sister; you reflect the feeling, not the facts, and she feels heard rather than advised-at."
+        ] },
       { l:"b", x:"Do one small thing she mentioned needing",
-        w:"Responsiveness is care made visible. A small concrete action <b>outperforms reassurance</b> because it shows you were listening and you followed through." },
+        w:"Responsiveness is care made visible. A small concrete action <b>outperforms reassurance</b> because it shows you were listening and you followed through.",
+        ex:[
+          "She mentioned the car was low on fuel; you fill it without being asked, and she notices you were listening.",
+          "She said she was dreading a call; you check in afterward — a tiny act that says \u201cI held that for you.\u201d",
+          "She mentioned wanting an early night; you quietly handle the dishes so she can have one."
+        ] },
       { l:"c", x:"Put the phone down when she's talking",
-        w:"Partial attention is read as mild rejection. <b>Undivided attention</b> is the cheapest and rarest gift you can give in a distracted age." }
+        w:"Partial attention is read as mild rejection. <b>Undivided attention</b> is the cheapest and rarest gift you can give in a distracted age.",
+        ex:[
+          "She starts a story; you set the phone face-down, and she tells it fully instead of trailing off.",
+          "You close the laptop when she walks in to talk — she feels like a priority, not an interruption.",
+          "Eye contact instead of a screen turns a five-minute update into a real moment of connection."
+        ] }
     ]},
     { t:"Secure attachment", items:[
       { l:"a", x:"Do what you said you'd do",
-        w:"Reliability is the soil security grows in. Small <b>kept promises</b> build a felt sense of safety far more than occasional grand gestures." },
+        w:"Reliability is the soil security grows in. Small <b>kept promises</b> build a felt sense of safety far more than occasional grand gestures.",
+        ex:[
+          "You said you'd book the appointment, and you did — a small kept word that quietly tells her you're reliable.",
+          "You promised to be home by seven and you were; she stops having to wonder.",
+          "Following through on a minor favour builds the same trust a big one would — because she sees the pattern."
+        ] },
       { l:"b", x:"Be reachable",
-        w:"A partner who can be reached when needed becomes a <b>secure base</b>. Predictable availability is what lowers background anxiety in a relationship." },
+        w:"A partner who can be reached when needed becomes a <b>secure base</b>. Predictable availability is what lowers background anxiety in a relationship.",
+        ex:[
+          "She texts during a stressful afternoon; a quick reply tells her you're there even when you're busy.",
+          "You let her know in advance when you'll be unreachable, so silence never reads as absence.",
+          "A two-word answer during your meeting still says \u201cI've got you\u201d — and lowers her stress."
+        ] },
       { l:"c", x:"Name and fix any small rupture same-day",
-        w:"Unrepaired ruptures <b>harden overnight</b>. Quick repair teaches the relationship a vital lesson: bad moments are survivable." }
+        w:"Unrepaired ruptures <b>harden overnight</b>. Quick repair teaches the relationship a vital lesson: bad moments are survivable.",
+        ex:[
+          "You were short with her in the morning; before bed you say \u201cI was off earlier, sorry\u201d — and it doesn't carry into tomorrow.",
+          "A misread text gets cleared up the same evening instead of festering for days.",
+          "You notice a cool moment between you and address it directly rather than hoping it blows over."
+        ] }
     ]},
     { t:"Shared meaning", items:[
       { l:"a", x:"Keep one daily ritual",
-        w:"Rituals create <b>reliable points of contact</b> that survive busy weeks. The predictability itself is bonding — it says 'us' happens on purpose." },
+        w:"Rituals create <b>reliable points of contact</b> that survive busy weeks. The predictability itself is bonding — it says 'us' happens on purpose.",
+        ex:[
+          "Morning coffee together, ten minutes, every day — busy weeks can't erase it, and it anchors you both.",
+          "A goodnight check-in becomes the one moment the day always includes, whatever else happened.",
+          "A short walk after dinner turns into the time real conversations reliably happen."
+        ] },
       { l:"b", x:"Reference an \u201cus\u201d goal",
-        w:"Couples with a shared sense of direction report more meaning and more <b>resilience under stress</b>. A goal turns two lives into one project." },
+        w:"Couples with a shared sense of direction report more meaning and more <b>resilience under stress</b>. A goal turns two lives into one project.",
+        ex:[
+          "You mention the trip you're saving for; the shared goal makes a dull budgeting talk feel like building something.",
+          "Talking about the home you want someday reminds you both you're walking the same direction.",
+          "You frame a sacrifice as \u201cfor us\u201d — and it lands as partnership, not loss."
+        ] },
       { l:"c", x:"Use \u201cwe\u201d language",
-        w:"Studies link natural <b>'we'-talk</b> to higher satisfaction and better conflict recovery. The pronoun both reflects and reinforces a team identity." }
+        w:"Studies link natural <b>'we'-talk</b> to higher satisfaction and better conflict recovery. The pronoun both reflects and reinforces a team identity.",
+        ex:[
+          "You say \u201cwe'll figure it out\u201d instead of \u201cyou'll be fine\u201d — and she feels she isn't facing it alone.",
+          "Describing a problem as \u201cour situation\u201d rather than \u201cyour problem\u201d changes how she hears it.",
+          "Small \u201cwe\u201d phrasing in everyday talk quietly keeps reinforcing that you're a team."
+        ] }
     ]},
     { t:"Novelty", items:[
       { l:"a", x:"Suggest one small new thing",
-        w:"The Arons' <b>self-expansion</b> research shows novel shared activity reignites the excitement that routine quietly erodes. Newness, not size, is what counts." },
+        w:"The Arons' <b>self-expansion</b> research shows novel shared activity reignites the excitement that routine quietly erodes. Newness, not size, is what counts.",
+        ex:[
+          "You try a place neither of you has been; the unfamiliar setting makes an ordinary evening feel like a date again.",
+          "A spontaneous detour on the drive home turns a routine commute into a small shared adventure.",
+          "You suggest a new weekend activity; the slight nervousness of doing something new reignites a spark."
+        ] },
       { l:"b", x:"Share something you learned",
-        w:"Bringing new ideas into the relationship keeps each of you <b>interesting to the other</b> — a steady defence against the slide into boredom." },
+        w:"Bringing new ideas into the relationship keeps each of you <b>interesting to the other</b> — a steady defence against the slide into boredom.",
+        ex:[
+          "You tell her a strange fact you read; the small exchange keeps you interesting to each other.",
+          "You bring a new idea to dinner instead of recapping the same day — and the conversation feels alive.",
+          "Sharing a podcast that struck you opens a topic you'd never have reached otherwise."
+        ] },
       { l:"c", x:"Break one routine deliberately",
-        w:"Deliberate novelty resists <b>hedonic adaptation</b> — the slow numbing to good things we already have, including a good partner." }
+        w:"Deliberate novelty resists <b>hedonic adaptation</b> — the slow numbing to good things we already have, including a good partner.",
+        ex:[
+          "You swap the usual Friday night on the couch for a late walk — and remember the relationship can still surprise you.",
+          "Eating breakfast somewhere new resets a week that was starting to blur together.",
+          "You change one fixed habit on purpose, and the freshness carries over into how you see each other."
+        ] }
     ]},
     { t:"Gratitude", items:[
       { l:"a", x:"Say one specific thank-you",
-        w:"<b>Specific</b> gratitude — naming the actual act — makes a partner feel truly seen, and predicts higher commitment far more than a vague 'thanks'." },
+        w:"<b>Specific</b> gratitude — naming the actual act — makes a partner feel truly seen, and predicts higher commitment far more than a vague 'thanks'.",
+        ex:[
+          "Instead of \u201cthanks\u201d you say \u201cthank you for handling the morning so I could sleep\u201d — and she feels actually seen.",
+          "Naming the exact thing she did makes the gratitude land as real, not reflexive.",
+          "\u201cThank you for being patient with me yesterday\u201d acknowledges an effort she wasn't sure you noticed."
+        ] },
       { l:"b", x:"Notice an effort out loud",
-        w:"Naming effort that usually goes unseen directly counters the drift toward <b>taking each other for granted</b> — a top quiet killer of relationships." },
+        w:"Naming effort that usually goes unseen directly counters the drift toward <b>taking each other for granted</b> — a top quiet killer of relationships.",
+        ex:[
+          "You say \u201cI saw you stayed late to finish that — that took a lot\u201d — and her invisible work becomes visible.",
+          "Pointing out the small thing she did for the household tells her it didn't go unnoticed.",
+          "You mention the effort behind the meal, not just that it was good — and the appreciation goes deeper."
+        ] },
       { l:"c", x:"Tell her one thing you admire",
-        w:"Expressed admiration builds <b>fondness</b> — the buffer Gottman found protects couples through their hardest seasons." }
+        w:"Expressed admiration builds <b>fondness</b> — the buffer Gottman found protects couples through their hardest seasons.",
+        ex:[
+          "You tell her you admire how she handled a hard conversation; admiration spoken aloud strengthens you both.",
+          "\u201cI really respect how you stuck to your values there\u201d reminds her you still look up to her.",
+          "Naming a quality you find impressive keeps fondness active instead of merely assumed."
+        ] }
     ]},
     { t:"Manage outside stress", items:[
       { l:"a", x:"Decompress before walking in",
-        w:"<b>Stress spillover</b> is well documented: tension carried in from outside gets discharged onto the nearest person. A few minutes of unwinding protects her from your day." },
+        w:"<b>Stress spillover</b> is well documented: tension carried in from outside gets discharged onto the nearest person. A few minutes of unwinding protects her from your day.",
+        ex:[
+          "You sit in the car for five minutes after a brutal day, so the person who walks in the door isn't carrying it.",
+          "A short walk between work and home means she gets you, not the residue of your meetings.",
+          "You take a breath before the front door, and a tense evening simply never starts."
+        ] },
       { l:"b", x:"Protect 15 quiet minutes together",
-        w:"Buffering couple time from outside pressure preserves the relationship's <b>repair capacity</b> — the reserve you draw on when things get hard." },
+        w:"Buffering couple time from outside pressure preserves the relationship's <b>repair capacity</b> — the reserve you draw on when things get hard.",
+        ex:[
+          "Phones away for fifteen minutes after dinner becomes the reserve you draw on when things get hard.",
+          "You guard a small pocket of calm so outside pressure can't crowd out the relationship entirely.",
+          "Even on the busiest days, a protected quarter-hour keeps you from becoming roommates."
+        ] },
       { l:"c", x:"Don't dump work stress on her",
-        w:"Sharing a hard day builds intimacy; making her <b>absorb</b> it erodes it. Offer the stress as something to witness, not something to carry." }
+        w:"Sharing a hard day builds intimacy; making her <b>absorb</b> it erodes it. Offer the stress as something to witness, not something to carry.",
+        ex:[
+          "You tell her about a hard day as something to share, not unload — she can support you without being flooded.",
+          "Instead of venting at her, you vent about the situation, so she's beside you, not in the blast radius.",
+          "You ask \u201ccan I tell you about something stressful?\u201d — and the framing keeps it from landing as an attack."
+        ] }
     ]},
     { t:"Affection", items:[
       { l:"a", x:"One non-sexual touch unprompted",
-        w:"Affectionate touch lowers <b>cortisol</b> and raises <b>oxytocin</b>. A hand on the shoulder is a small daily biological deposit of safety." },
+        w:"Affectionate touch lowers <b>cortisol</b> and raises <b>oxytocin</b>. A hand on the shoulder is a small daily biological deposit of safety.",
+        ex:[
+          "A hand on her back as you pass in the kitchen — a tiny, wordless deposit of warmth.",
+          "You hold her hand on the walk for no particular reason; the contact says \u201cI'm glad you're here.\u201d",
+          "A brief shoulder squeeze while she's stressed lowers her tension before a word is spoken."
+        ] },
       { l:"b", x:"One genuine compliment",
-        w:"Sincere compliments sustain <b>positive sentiment</b> — the lens through which neutral or clumsy acts later get read kindly instead of harshly." },
+        w:"Sincere compliments sustain <b>positive sentiment</b> — the lens through which neutral or clumsy acts later get read kindly instead of harshly.",
+        ex:[
+          "You tell her she looks great as she heads out — sincerely — and she carries it through her day.",
+          "A compliment about something she did, not just how she looks, keeps the positive lens intact.",
+          "Noticing something good out loud reminds her you're still looking, and still pleased by what you see."
+        ] },
       { l:"c", x:"One unhurried hug or kiss",
-        w:"A roughly <b>20-second hug or 6-second kiss</b> crosses the threshold where bonding chemistry actually engages. Brief contact doesn't reach it." }
+        w:"A roughly <b>20-second hug or 6-second kiss</b> crosses the threshold where bonding chemistry actually engages. Brief contact doesn't reach it.",
+        ex:[
+          "A long hug at the door instead of a quick peck — held just long enough for both of you to feel it.",
+          "You kiss her without rushing off afterward; the few extra seconds are where the bonding actually happens.",
+          "An unhurried embrace before sleep ends the day on contact rather than on screens."
+        ] }
     ]},
     { t:"Growth mindset", items:[
       { l:"a", x:"Treat friction as buildable, not fatal",
-        w:"People who see relationships as <b>cultivated</b> persist through rough patches; 'soulmate' believers quit sooner when reality gets difficult." },
+        w:"People who see relationships as <b>cultivated</b> persist through rough patches; 'soulmate' believers quit sooner when reality gets difficult.",
+        ex:[
+          "After a rough week you think \u201cthis is a patch, not the verdict\u201d — and keep showing up instead of withdrawing.",
+          "A recurring disagreement feels like a problem to solve together, not proof you're wrong for each other.",
+          "You see a hard season as construction, not collapse — and that belief itself carries you through it."
+        ] },
       { l:"b", x:"Choose one effort daily",
-        w:"Relationships are maintained by <b>accumulated small choices</b>, not sustained by feeling alone. Effort is what feeling is built from." },
+        w:"Relationships are maintained by <b>accumulated small choices</b>, not sustained by feeling alone. Effort is what feeling is built from.",
+        ex:[
+          "On a day you don't feel it, you do one kind thing anyway — and notice the feeling often follows the act.",
+          "You make one small deliberate choice for the relationship daily, trusting that they accumulate.",
+          "Even tired, you pick one practice from this list — because love is maintained by choices, not moods."
+        ] },
       { l:"c", x:"Assume good intent",
-        w:"A charitable read of ambiguous behaviour breaks the <b>negative-interpretation spiral</b> in which everything a partner does gets read as a slight." }
+        w:"A charitable read of ambiguous behaviour breaks the <b>negative-interpretation spiral</b> in which everything a partner does gets read as a slight.",
+        ex:[
+          "She forgets something you asked; you assume a busy day, not disrespect — and the evening stays warm.",
+          "An ambiguous text gets read in the kindest plausible way, and a needless argument never begins.",
+          "You give her the benefit of the doubt by default, breaking the spiral where every act reads as a slight."
+        ] }
     ]}
   ];
 
@@ -608,7 +775,10 @@
         wb.innerHTML='<span class="ar">\u203A</span> why this works';
         var wd=document.createElement("div");
         wd.className="why";
-        wd.innerHTML='<div class="inner">'+it.w+'</div>';
+        var exHtml=(it.ex||[]).map(function(e){return '<li>'+e+'</li>';}).join('');
+        wd.innerHTML='<div class="inner"><p class="why-insight">'+it.w+'</p>'+
+          '<div class="ex-label">In real life</div>'+
+          '<ul class="ex-list">'+exHtml+'</ul></div>';
         wb.addEventListener("click",function(){
           wb.classList.toggle("open");
           wd.style.maxHeight = wd.style.maxHeight ? "" : (wd.scrollHeight+20)+"px";
