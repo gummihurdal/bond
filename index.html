@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bond — A Daily Relationship Practice</title>
+<meta name="description" content="A research-based daily practice for building a closer, more lasting relationship — one conscious choice at a time." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#f5efe3;
+    --paper-2:#efe7d6;
+    --surface:#fffdf7;
+    --ink:#2a2520;
+    --ink-soft:#5d564c;
+    --muted:#938a79;
+    --line:#e2d8c4;
+    --clay:#bd5d3a;
+    --clay-deep:#9c4729;
+    --sage:#6f7d57;
+    --gold:#cf9a3e;
+    --shadow:rgba(54,42,28,.13);
+    --display:'Fraunces',Georgia,serif;
+    --body:'Newsreader',Georgia,serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:var(--body);
+    background:var(--paper);
+    color:var(--ink);
+    font-size:18px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 15% 8%, rgba(189,93,58,.06), transparent 42%),
+      radial-gradient(circle at 88% 92%, rgba(111,125,87,.07), transparent 46%);
+    background-attachment:fixed;
+  }
+  ::selection{background:var(--clay);color:#fff;}
+
+  .wrap{max-width:760px;margin:0 auto;padding:0 22px 120px;}
+
+  /* ---------- header ---------- */
+  header{
+    padding:48px 0 26px;
+    text-align:center;
+    animation:rise .7s ease both;
+  }
+  .mark{
+    display:inline-flex;align-items:center;gap:9px;
+    font-family:var(--display);font-size:14px;letter-spacing:.32em;
+    text-transform:uppercase;color:var(--clay);font-weight:600;
+    margin-bottom:14px;
+  }
+  .mark::before,.mark::after{content:"";width:26px;height:1px;background:var(--clay);opacity:.5;}
+  h1{
+    font-family:var(--display);
+    font-weight:500;
+    font-size:clamp(2.6rem,8vw,3.7rem);
+    line-height:1.04;
+    letter-spacing:-.018em;
+  }
+  h1 em{font-style:italic;color:var(--clay);}
+  .tagline{
+    margin:14px auto 0;max-width:430px;
+    color:var(--ink-soft);font-size:1.04rem;font-style:italic;
+  }
+
+  /* ---------- date / streak strip ---------- */
+  .strip{
+    display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
+    margin-top:26px;animation:rise .7s .08s ease both;
+  }
+  .chip{
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:999px;padding:8px 16px;
+    font-size:.82rem;letter-spacing:.04em;color:var(--ink-soft);
+    display:flex;align-items:center;gap:7px;
+  }
+  .chip b{font-family:var(--display);color:var(--ink);font-weight:600;}
+  .chip .dot{width:7px;height:7px;border-radius:50%;background:var(--clay);}
+
+  /* ---------- tabs ---------- */
+  nav.tabs{
+    display:flex;justify-content:center;gap:4px;
+    margin:30px auto 8px;background:var(--paper-2);
+    border:1px solid var(--line);border-radius:999px;padding:5px;
+    width:fit-content;animation:rise .7s .14s ease both;
+  }
+  nav.tabs button{
+    font-family:var(--body);font-size:.95rem;
+    border:none;background:transparent;color:var(--ink-soft);
+    padding:9px 20px;border-radius:999px;cursor:pointer;
+    transition:.25s;letter-spacing:.01em;
+  }
+  nav.tabs button:hover{color:var(--ink);}
+  nav.tabs button.active{
+    background:var(--ink);color:var(--paper);
+    box-shadow:0 4px 14px var(--shadow);
+  }
+
+  .panel{display:none;animation:fade .45s ease both;}
+  .panel.active{display:block;}
+
+  /* ---------- score meter ---------- */
+  .meter{
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:20px;padding:26px 28px;margin:24px 0 8px;
+    box-shadow:0 14px 36px -22px var(--shadow);
+    position:relative;overflow:hidden;
+  }
+  .meter::before{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(110deg,transparent 60%,rgba(189,93,58,.05));
+    pointer-events:none;
+  }
+  .meter .top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;}
+  .meter .score{font-family:var(--display);font-size:3.3rem;font-weight:500;line-height:1;letter-spacing:-.02em;}
+  .meter .score span{font-size:1.3rem;color:var(--muted);}
+  .meter .label{text-align:right;}
+  .meter .label .pct{font-family:var(--display);font-size:1.5rem;font-weight:600;color:var(--clay);}
+  .meter .label .verdict{font-size:.9rem;color:var(--ink-soft);font-style:italic;}
+  .bar{
+    margin-top:18px;height:11px;border-radius:999px;
+    background:var(--paper-2);overflow:hidden;
+  }
+  .bar > i{
+    display:block;height:100%;border-radius:999px;width:0;
+    background:linear-gradient(90deg,var(--gold),var(--clay));
+    transition:width .6s cubic-bezier(.4,1.2,.5,1);
+  }
+  .meter.perfect > i, .meter.perfect .bar > i{
+    background:linear-gradient(90deg,var(--sage),#8a9b6a);
+  }
+
+  .hint{
+    font-size:.92rem;color:var(--ink-soft);text-align:center;
+    margin:20px 6px 4px;font-style:italic;
+  }
+
+  /* ---------- category card ---------- */
+  .cat{
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:18px;margin:16px 0;overflow:hidden;
+    box-shadow:0 10px 30px -24px var(--shadow);
+  }
+  .cat-head{
+    display:flex;align-items:center;gap:14px;
+    padding:18px 20px 14px;
+  }
+  .num{
+    flex:none;width:38px;height:38px;border-radius:50%;
+    border:1.5px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--display);font-weight:600;font-size:1.05rem;
+    color:var(--clay);background:var(--paper);
+    transition:.35s;
+  }
+  .cat.full .num{background:var(--sage);border-color:var(--sage);color:#fff;}
+  .cat-head h3{
+    font-family:var(--display);font-weight:500;font-size:1.32rem;
+    letter-spacing:-.01em;flex:1;
+  }
+  .cat-prog{
+    font-size:.78rem;color:var(--muted);letter-spacing:.05em;
+    font-family:var(--display);font-weight:600;
+    background:var(--paper-2);padding:4px 9px;border-radius:999px;
+  }
+  .cat.full .cat-prog{background:rgba(111,125,87,.16);color:var(--sage);}
+
+  .practice{
+    border-top:1px solid var(--line);
+    padding:15px 20px;
+  }
+  .pr-row{display:flex;align-items:flex-start;gap:14px;}
+  .pr-text{flex:1;}
+  .pr-text .lt{
+    font-family:var(--display);font-size:.74rem;font-weight:600;
+    color:var(--clay);text-transform:uppercase;letter-spacing:.13em;
+  }
+  .pr-text p{font-size:1.04rem;margin-top:1px;}
+
+  /* tri-state control */
+  .states{display:flex;gap:6px;flex:none;}
+  .states button{
+    width:34px;height:34px;border-radius:11px;cursor:pointer;
+    border:1.5px solid var(--line);background:var(--paper);
+    display:flex;align-items:center;justify-content:center;
+    transition:.18s;color:var(--muted);
+  }
+  .states button svg{width:16px;height:16px;}
+  .states button:hover{border-color:var(--ink-soft);transform:translateY(-1px);}
+  .states button.on[data-v="skip"]{background:var(--paper-2);border-color:var(--muted);color:var(--ink-soft);}
+  .states button.on[data-v="part"]{background:var(--gold);border-color:var(--gold);color:#fff;}
+  .states button.on[data-v="done"]{background:var(--sage);border-color:var(--sage);color:#fff;}
+
+  .why-btn{
+    margin-top:10px;font-family:var(--body);font-size:.86rem;
+    background:none;border:none;color:var(--clay);cursor:pointer;
+    display:inline-flex;align-items:center;gap:5px;font-style:italic;
+    padding:0;
+  }
+  .why-btn .ar{transition:.25s;display:inline-block;}
+  .why-btn.open .ar{transform:rotate(90deg);}
+  .why{
+    max-height:0;overflow:hidden;transition:max-height .35s ease;
+  }
+  .why .inner{
+    margin-top:10px;padding:13px 15px;
+    background:var(--paper);border-left:2.5px solid var(--clay);
+    border-radius:0 8px 8px 0;
+    font-size:.94rem;color:var(--ink-soft);
+  }
+  .why .inner b{color:var(--ink);font-style:italic;font-weight:500;}
+
+  /* ---------- reflection ---------- */
+  .reflect{
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:18px;padding:20px;margin:16px 0;
+  }
+  .reflect h3{font-family:var(--display);font-weight:500;font-size:1.25rem;margin-bottom:4px;}
+  .reflect p.sub{font-size:.9rem;color:var(--ink-soft);font-style:italic;margin-bottom:12px;}
+  .reflect textarea{
+    width:100%;min-height:84px;resize:vertical;
+    font-family:var(--body);font-size:1rem;color:var(--ink);
+    background:var(--paper);border:1px solid var(--line);
+    border-radius:11px;padding:12px 14px;line-height:1.55;
+  }
+  .reflect textarea:focus{outline:none;border-color:var(--clay);}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    font-family:var(--body);font-size:.98rem;cursor:pointer;
+    border-radius:999px;padding:11px 22px;transition:.22s;
+    border:1px solid var(--ink);background:var(--ink);color:var(--paper);
+  }
+  .btn:hover{background:var(--clay-deep);border-color:var(--clay-deep);}
+  .btn.ghost{background:transparent;color:var(--ink-soft);border-color:var(--line);}
+  .btn.ghost:hover{background:var(--paper-2);color:var(--ink);}
+  .btn-row{display:flex;gap:10px;justify-content:center;margin-top:24px;flex-wrap:wrap;}
+
+  /* ---------- insights ---------- */
+  .ins-lead{
+    font-family:var(--display);font-size:1.4rem;font-weight:500;
+    line-height:1.4;margin:24px 0 6px;
+  }
+  .ins-note{
+    background:var(--surface);border:1px solid var(--line);
+    border-left:3px solid var(--clay);border-radius:0 14px 14px 0;
+    padding:18px 20px;margin:14px 0 22px;color:var(--ink-soft);
+  }
+  .ins-note b{color:var(--ink);font-weight:500;}
+  .barlist{display:flex;flex-direction:column;gap:11px;}
+  .brow{display:flex;align-items:center;gap:12px;}
+  .brow .nm{
+    flex:none;width:140px;font-size:.9rem;color:var(--ink-soft);
+    text-align:right;
+  }
+  .brow .track{
+    flex:1;height:22px;background:var(--paper-2);border-radius:7px;
+    overflow:hidden;border:1px solid var(--line);
+  }
+  .brow .track > i{
+    display:block;height:100%;width:0;border-radius:6px;
+    background:linear-gradient(90deg,var(--gold),var(--clay));
+    transition:width .8s cubic-bezier(.4,1.1,.5,1);
+  }
+  .brow .vl{flex:none;width:42px;font-family:var(--display);font-weight:600;font-size:.9rem;}
+  .twocol{display:flex;gap:14px;flex-wrap:wrap;margin:20px 0;}
+  .stat{
+    flex:1;min-width:150px;background:var(--surface);
+    border:1px solid var(--line);border-radius:16px;padding:18px 20px;
+  }
+  .stat .k{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+  .stat .v{font-family:var(--display);font-size:2.1rem;font-weight:500;line-height:1.1;margin-top:4px;}
+  .stat .v small{font-size:1rem;color:var(--muted);}
+
+  /* ---------- journey ---------- */
+  .spark{
+    display:flex;align-items:flex-end;gap:5px;height:120px;
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:16px;padding:18px;margin:18px 0;overflow-x:auto;
+  }
+  .spark .col{
+    flex:1;min-width:14px;display:flex;flex-direction:column;
+    align-items:center;justify-content:flex-end;height:100%;gap:6px;
+  }
+  .spark .col i{
+    width:100%;max-width:26px;border-radius:5px 5px 2px 2px;
+    background:linear-gradient(180deg,var(--clay),var(--gold));
+    transition:height .6s ease;min-height:3px;
+  }
+  .spark .col.perf i{background:linear-gradient(180deg,var(--sage),#9aac79);}
+  .spark .col span{font-size:.62rem;color:var(--muted);}
+  .log{display:flex;flex-direction:column;gap:8px;margin-top:14px;}
+  .logrow{
+    display:flex;align-items:center;gap:14px;
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:12px;padding:12px 16px;
+  }
+  .logrow .d{flex:1;font-size:.95rem;}
+  .logrow .d small{color:var(--muted);font-style:italic;}
+  .logrow .s{
+    font-family:var(--display);font-weight:600;font-size:1.05rem;
+    padding:3px 11px;border-radius:999px;background:var(--paper-2);
+  }
+  .logrow .s.hi{background:rgba(111,125,87,.16);color:var(--sage);}
+  .empty{
+    text-align:center;color:var(--muted);font-style:italic;
+    padding:40px 20px;
+  }
+
+  /* ---------- method ---------- */
+  .method p{margin:14px 0;color:var(--ink-soft);}
+  .method h3{font-family:var(--display);font-weight:500;font-size:1.3rem;margin:22px 0 4px;}
+  .method .src{
+    font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);
+    margin-top:24px;padding-top:16px;
+  }
+
+  footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:46px;font-style:italic;}
+
+  /* ---------- toast ---------- */
+  .toast{
+    position:fixed;left:50%;bottom:28px;transform:translate(-50%,140%);
+    background:var(--ink);color:var(--paper);padding:13px 24px;
+    border-radius:999px;font-size:.92rem;box-shadow:0 12px 30px var(--shadow);
+    transition:transform .45s cubic-bezier(.4,1.3,.5,1);z-index:50;
+    display:flex;align-items:center;gap:9px;
+  }
+  .toast.show{transform:translate(-50%,0);}
+  .toast.win{background:var(--sage);}
+
+  @keyframes rise{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+  @keyframes fade{from{opacity:0;}to{opacity:1;}}
+
+  @media(max-width:560px){
+    body{font-size:17px;}
+    .meter .score{font-size:2.7rem;}
+    .brow .nm{width:96px;font-size:.82rem;}
+    .pr-text p{font-size:.99rem;}
+    nav.tabs button{padding:8px 13px;font-size:.88rem;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="mark">Daily Practice</div>
+    <h1>Bond<em>.</em></h1>
+    <p class="tagline">Lasting love is not found — it is practised. Thirty small, conscious choices, made one day at a time.</p>
+    <div class="strip">
+      <div class="chip"><span class="dot"></span><span id="todayDate">—</span></div>
+      <div class="chip">Streak <b id="streakVal">0</b> days</div>
+      <div class="chip">Best <b id="bestVal">—</b></div>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="active" data-tab="today">Today</button>
+    <button data-tab="insights">Insights</button>
+    <button data-tab="journey">Journey</button>
+    <button data-tab="method">Method</button>
+  </nav>
+
+  <!-- ============ TODAY ============ -->
+  <section class="panel active" id="today">
+    <div class="meter" id="meterBox">
+      <div class="top">
+        <div class="score"><span id="scoreNum">0</span><span>/30</span></div>
+        <div class="label">
+          <div class="pct" id="scorePct">0%</div>
+          <div class="verdict" id="scoreVerdict">A new day to begin</div>
+        </div>
+      </div>
+      <div class="bar"><i id="scoreBar"></i></div>
+    </div>
+    <p class="hint">Tap a mark for each practice: <b>○</b> not yet · <b>◐</b> partly · <b>●</b> done. Open “why this works” to build the insight.</p>
+
+    <div id="catList"></div>
+
+    <div class="reflect">
+      <h3>One honest line</h3>
+      <p class="sub">What did connection look like today? Even a fragment counts.</p>
+      <textarea id="journal" placeholder="Today I noticed…"></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn" id="saveBtn">Save today</button>
+      <button class="btn ghost" id="resetDayBtn">Clear day</button>
+    </div>
+  </section>
+
+  <!-- ============ INSIGHTS ============ -->
+  <section class="panel" id="insights">
+    <p class="ins-lead" id="insLead">Your patterns will appear here.</p>
+    <div class="ins-note" id="insNote">Complete a day or two of practice and Bond will show you where connection comes easily — and where a little attention would change the most.</div>
+    <div class="twocol">
+      <div class="stat"><div class="k">7-day average</div><div class="v" id="avg7">—</div></div>
+      <div class="stat"><div class="k">Days practised</div><div class="v" id="daysCount">0</div></div>
+    </div>
+    <h3 style="font-family:var(--display);font-weight:500;font-size:1.25rem;margin:6px 0 14px;">Strength by area <small style="color:var(--muted);font-size:.8rem;">— recent average</small></h3>
+    <div class="barlist" id="catBars"></div>
+  </section>
+
+  <!-- ============ JOURNEY ============ -->
+  <section class="panel" id="journey">
+    <p class="ins-lead">Consistency, not perfection.</p>
+    <div class="ins-note">A single great day rarely changes a relationship. A modest score repeated for months reliably does. Watch the line, not the spike.</div>
+    <div class="spark" id="spark"></div>
+    <div class="log" id="logList"></div>
+  </section>
+
+  <!-- ============ METHOD ============ -->
+  <section class="panel method" id="method">
+    <p class="ins-lead">Why these thirty practices.</p>
+    <p>Bond distills decades of relationship science into the few behaviours that the evidence most consistently links to lasting, satisfying partnerships. None of them are grand. That is the point — durable closeness is built from small acts repeated until they become who you are.</p>
+
+    <h3>The friendship system</h3>
+    <p>John &amp; Julie Gottman's longitudinal work found that couples who endure keep a living, updated picture of each other and respond to small “bids” for attention the vast majority of the time. Friendship — not chemistry — is the foundation that conflict skill rests on.</p>
+
+    <h3>Repair over perfection</h3>
+    <p>Every couple fights. What separates the stable ones is the ability to pause a flooded moment and make a repair attempt. The repair need not be elegant; its mere presence changes the outcome.</p>
+
+    <h3>Responsiveness &amp; secure attachment</h3>
+    <p>The most robust predictor of relationship quality is perceived partner responsiveness — feeling seen, understood and cared for. Reliability, reachability and same-day repair turn a partner into a “secure base,” lowering anxiety and raising trust.</p>
+
+    <h3>Meaning, novelty &amp; gratitude</h3>
+    <p>Shared rituals and goals create an “us.” Self-expansion research shows novel shared activity counters the slow numbing of routine. And specific, spoken gratitude protects the positive lens through which everything else gets interpreted.</p>
+
+    <h3>The mindset that holds it together</h3>
+    <p>People who believe relationships are <em>cultivated</em> rather than fated persist through rough patches; “soulmate” thinkers give up sooner. Closeness is a craft. Practised daily, it compounds.</p>
+
+    <p class="src">Grounded in the work of John &amp; Julie Gottman, Arthur &amp; Elaine Aron (self-expansion), Sue Johnson (Emotionally Focused Therapy), Harry Reis (perceived responsiveness) and the Harvard Study of Adult Development. Bond is a self-reflection tool, not therapy or clinical advice.</p>
+  </section>
+
+  <footer>Bond · a quiet daily practice · your entries stay private on this device</footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- data ---------- */
+  var CATS = [
+    { t:"Friendship base", items:[
+      { l:"a", x:"Ask one curious question about her day",
+        w:"Gottman's research shows enduring couples keep detailed <b>love maps</b> — a constantly updated knowledge of each other's inner world. A genuine question is how that map stays current; it signals she still matters to you." },
+      { l:"b", x:"Note something new about her inner world",
+        w:"Partners who keep learning about each other resist the <b>'I already know you'</b> trap. Assuming you've finished discovering someone is where quiet distance begins." },
+      { l:"c", x:"Respond to small bids instead of half-ignoring",
+        w:"Gottman found masters turn toward bids for attention about <b>86% of the time</b>, versus 33% for couples who later separated. These micro-moments compound into the felt sense of being chosen." }
+    ]},
+    { t:"Master conflict", items:[
+      { l:"a", x:"Pause before reacting",
+        w:"The first three minutes of a disagreement strongly predict how it ends. A pause stops a <b>flooded nervous system</b> from hijacking words you can't take back." },
+      { l:"b", x:"Make one repair attempt mid-disagreement",
+        w:"Repair attempts are the single biggest difference between stable and unstable couples. Their <b>content matters less than their presence</b> — even a clumsy 'let me try that again' works." },
+      { l:"c", x:"End hard talks with one point of agreement",
+        w:"Closing on common ground prevents the <b>unresolved residue</b> that quietly accumulates into resentment over months." }
+    ]},
+    { t:"Responsiveness", items:[
+      { l:"a", x:"Reflect back what she said before replying",
+        w:"Feeling <b>understood</b> matters more than being agreed with. Reflecting proves you actually received her — the core of perceived partner responsiveness." },
+      { l:"b", x:"Do one small thing she mentioned needing",
+        w:"Responsiveness is care made visible. A small concrete action <b>outperforms reassurance</b> because it shows you were listening and you followed through." },
+      { l:"c", x:"Put the phone down when she's talking",
+        w:"Partial attention is read as mild rejection. <b>Undivided attention</b> is the cheapest and rarest gift you can give in a distracted age." }
+    ]},
+    { t:"Secure attachment", items:[
+      { l:"a", x:"Do what you said you'd do",
+        w:"Reliability is the soil security grows in. Small <b>kept promises</b> build a felt sense of safety far more than occasional grand gestures." },
+      { l:"b", x:"Be reachable",
+        w:"A partner who can be reached when needed becomes a <b>secure base</b>. Predictable availability is what lowers background anxiety in a relationship." },
+      { l:"c", x:"Name and fix any small rupture same-day",
+        w:"Unrepaired ruptures <b>harden overnight</b>. Quick repair teaches the relationship a vital lesson: bad moments are survivable." }
+    ]},
+    { t:"Shared meaning", items:[
+      { l:"a", x:"Keep one daily ritual",
+        w:"Rituals create <b>reliable points of contact</b> that survive busy weeks. The predictability itself is bonding — it says 'us' happens on purpose." },
+      { l:"b", x:"Reference an \u201cus\u201d goal",
+        w:"Couples with a shared sense of direction report more meaning and more <b>resilience under stress</b>. A goal turns two lives into one project." },
+      { l:"c", x:"Use \u201cwe\u201d language",
+        w:"Studies link natural <b>'we'-talk</b> to higher satisfaction and better conflict recovery. The pronoun both reflects and reinforces a team identity." }
+    ]},
+    { t:"Novelty", items:[
+      { l:"a", x:"Suggest one small new thing",
+        w:"The Arons' <b>self-expansion</b> research shows novel shared activity reignites the excitement that routine quietly erodes. Newness, not size, is what counts." },
+      { l:"b", x:"Share something you learned",
+        w:"Bringing new ideas into the relationship keeps each of you <b>interesting to the other</b> — a steady defence against the slide into boredom." },
+      { l:"c", x:"Break one routine deliberately",
+        w:"Deliberate novelty resists <b>hedonic adaptation</b> — the slow numbing to good things we already have, including a good partner." }
+    ]},
+    { t:"Gratitude", items:[
+      { l:"a", x:"Say one specific thank-you",
+        w:"<b>Specific</b> gratitude — naming the actual act — makes a partner feel truly seen, and predicts higher commitment far more than a vague 'thanks'." },
+      { l:"b", x:"Notice an effort out loud",
+        w:"Naming effort that usually goes unseen directly counters the drift toward <b>taking each other for granted</b> — a top quiet killer of relationships." },
+      { l:"c", x:"Tell her one thing you admire",
+        w:"Expressed admiration builds <b>fondness</b> — the buffer Gottman found protects couples through their hardest seasons." }
+    ]},
+    { t:"Manage outside stress", items:[
+      { l:"a", x:"Decompress before walking in",
+        w:"<b>Stress spillover</b> is well documented: tension carried in from outside gets discharged onto the nearest person. A few minutes of unwinding protects her from your day." },
+      { l:"b", x:"Protect 15 quiet minutes together",
+        w:"Buffering couple time from outside pressure preserves the relationship's <b>repair capacity</b> — the reserve you draw on when things get hard." },
+      { l:"c", x:"Don't dump work stress on her",
+        w:"Sharing a hard day builds intimacy; making her <b>absorb</b> it erodes it. Offer the stress as something to witness, not something to carry." }
+    ]},
+    { t:"Affection", items:[
+      { l:"a", x:"One non-sexual touch unprompted",
+        w:"Affectionate touch lowers <b>cortisol</b> and raises <b>oxytocin</b>. A hand on the shoulder is a small daily biological deposit of safety." },
+      { l:"b", x:"One genuine compliment",
+        w:"Sincere compliments sustain <b>positive sentiment</b> — the lens through which neutral or clumsy acts later get read kindly instead of harshly." },
+      { l:"c", x:"One unhurried hug or kiss",
+        w:"A roughly <b>20-second hug or 6-second kiss</b> crosses the threshold where bonding chemistry actually engages. Brief contact doesn't reach it." }
+    ]},
+    { t:"Growth mindset", items:[
+      { l:"a", x:"Treat friction as buildable, not fatal",
+        w:"People who see relationships as <b>cultivated</b> persist through rough patches; 'soulmate' believers quit sooner when reality gets difficult." },
+      { l:"b", x:"Choose one effort daily",
+        w:"Relationships are maintained by <b>accumulated small choices</b>, not sustained by feeling alone. Effort is what feeling is built from." },
+      { l:"c", x:"Assume good intent",
+        w:"A charitable read of ambiguous behaviour breaks the <b>negative-interpretation spiral</b> in which everything a partner does gets read as a slight." }
+    ]}
+  ];
+
+  var VAL = { skip:0, part:0.5, done:1 };
+  var ICON = {
+    skip:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/></svg>',
+    part:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none"/></svg>',
+    done:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+  };
+
+  /* ---------- storage ---------- */
+  var PREFIX = "bond:v1:";
+  function todayKey(){
+    var d = new Date();
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  }
+  function load(key){
+    try{ var r = localStorage.getItem(PREFIX+key); return r?JSON.parse(r):null; }
+    catch(e){ return null; }
+  }
+  function save(key,obj){
+    try{ localStorage.setItem(PREFIX+key, JSON.stringify(obj)); return true; }
+    catch(e){ return false; }
+  }
+  function allDays(){
+    var out=[];
+    try{
+      for(var i=0;i<localStorage.length;i++){
+        var k=localStorage.key(i);
+        if(k && k.indexOf(PREFIX+"day:")===0){
+          var date=k.slice((PREFIX+"day:").length);
+          var v=JSON.parse(localStorage.getItem(k));
+          out.push({date:date,data:v});
+        }
+      }
+    }catch(e){}
+    out.sort(function(a,b){return a.date<b.date?-1:1;});
+    return out;
+  }
+
+  /* ---------- state ---------- */
+  var TK = todayKey();
+  var state = load("day:"+TK) || { marks:{}, journal:"" };
+  if(!state.marks) state.marks={};
+
+  /* ---------- render today ---------- */
+  function flatIndex(ci,ii){ return ci+"-"+ii; }
+
+  function buildCats(){
+    var host = document.getElementById("catList");
+    host.innerHTML="";
+    CATS.forEach(function(cat,ci){
+      var card=document.createElement("div");
+      card.className="cat"; card.dataset.ci=ci;
+      var head=document.createElement("div");
+      head.className="cat-head";
+      head.innerHTML='<div class="num">'+(ci+1)+'</div>'+
+        '<h3>'+cat.t+'</h3>'+
+        '<div class="cat-prog" data-prog="'+ci+'">0/3</div>';
+      card.appendChild(head);
+
+      cat.items.forEach(function(it,ii){
+        var idx=flatIndex(ci,ii);
+        var cur=state.marks[idx]||null;
+        var pr=document.createElement("div");
+        pr.className="practice";
+        var row=document.createElement("div");
+        row.className="pr-row";
+        row.innerHTML=
+          '<div class="pr-text"><div class="lt">'+it.l+'</div><p>'+it.x+'</p></div>'+
+          '<div class="states" data-idx="'+idx+'">'+
+            stateBtn("skip",cur)+stateBtn("part",cur)+stateBtn("done",cur)+
+          '</div>';
+        pr.appendChild(row);
+
+        var wb=document.createElement("button");
+        wb.className="why-btn";
+        wb.innerHTML='<span class="ar">\u203A</span> why this works';
+        var wd=document.createElement("div");
+        wd.className="why";
+        wd.innerHTML='<div class="inner">'+it.w+'</div>';
+        wb.addEventListener("click",function(){
+          wb.classList.toggle("open");
+          wd.style.maxHeight = wd.style.maxHeight ? "" : (wd.scrollHeight+20)+"px";
+        });
+        pr.appendChild(wb);
+        pr.appendChild(wd);
+        card.appendChild(pr);
+      });
+      host.appendChild(card);
+    });
+
+    host.addEventListener("click",function(e){
+      var b=e.target.closest(".states button");
+      if(!b) return;
+      var box=b.parentNode, idx=box.dataset.idx, v=b.dataset.v;
+      if(state.marks[idx]===v){ delete state.marks[idx]; }
+      else { state.marks[idx]=v; }
+      box.querySelectorAll("button").forEach(function(x){
+        x.classList.toggle("on", x.dataset.v===state.marks[idx]);
+      });
+      refresh();
+    });
+  }
+  function stateBtn(v,cur){
+    return '<button data-v="'+v+'" class="'+(cur===v?"on":"")+'">'+ICON[v]+'</button>';
+  }
+
+  function score(marks){
+    var s=0; for(var k in marks){ s+=VAL[marks[k]]||0; }
+    return s;
+  }
+  function catScore(ci,marks){
+    var s=0;
+    for(var ii=0;ii<3;ii++){ var v=marks[flatIndex(ci,ii)]; s+=VAL[v]||0; }
+    return s;
+  }
+
+  function verdict(pct){
+    if(pct>=100) return "A perfect day of presence";
+    if(pct>=85) return "Deeply connected — beautiful work";
+    if(pct>=65) return "A warm, attentive day";
+    if(pct>=40) return "Some real moments of care";
+    if(pct>0)   return "A start — small steps count";
+    return "A new day to begin";
+  }
+
+  function refresh(){
+    var s=score(state.marks);
+    var pct=Math.round(s/30*100);
+    document.getElementById("scoreNum").textContent = (s%1===0)?s:s.toFixed(1);
+    document.getElementById("scorePct").textContent = pct+"%";
+    document.getElementById("scoreVerdict").textContent = verdict(pct);
+    document.getElementById("scoreBar").style.width = pct+"%";
+    var mb=document.getElementById("meterBox");
+    mb.classList.toggle("perfect", s>=30);
+
+    CATS.forEach(function(cat,ci){
+      var cs=catScore(ci,state.marks);
+      var prog=document.querySelector('[data-prog="'+ci+'"]');
+      var disp = (cs%1===0?cs:cs.toFixed(1));
+      if(prog) prog.textContent=disp+"/3";
+      var card=document.querySelector('.cat[data-ci="'+ci+'"]');
+      if(card) card.classList.toggle("full", cs>=3);
+    });
+  }
+
+  /* ---------- save ---------- */
+  function saveDay(silent){
+    state.journal = document.getElementById("journal").value;
+    var s=score(state.marks);
+    var ok=save("day:"+TK, { marks:state.marks, journal:state.journal, score:s, ts:Date.now() });
+    updateStrip();
+    if(!silent){
+      if(s>=30) toast("Perfect day — every practice met. Remarkable.", true);
+      else if(ok) toast("Saved. Come back tomorrow and keep the streak.");
+      else toast("Could not save — storage may be disabled.");
+    }
+    renderInsights(); renderJourney();
+  }
+
+  /* ---------- streak / strip ---------- */
+  function computeStreak(){
+    var days=allDays();
+    var set={}; days.forEach(function(d){ if((d.data&&d.data.score>0)) set[d.date]=true; });
+    var streak=0;
+    var cur=new Date();
+    // count back from today (today counts only if engaged)
+    for(var i=0;i<3650;i++){
+      var key=cur.getFullYear()+"-"+String(cur.getMonth()+1).padStart(2,"0")+"-"+String(cur.getDate()).padStart(2,"0");
+      if(set[key]){ streak++; cur.setDate(cur.getDate()-1); }
+      else if(i===0){ cur.setDate(cur.getDate()-1); } // today not yet done — keep yesterday's run
+      else break;
+    }
+    return streak;
+  }
+  function bestScore(){
+    var b=0; allDays().forEach(function(d){ if(d.data&&d.data.score>b) b=d.data.score; });
+    return b;
+  }
+  function updateStrip(){
+    document.getElementById("streakVal").textContent = computeStreak();
+    var b=bestScore();
+    document.getElementById("bestVal").textContent = b>0?((b%1===0?b:b.toFixed(1))+"/30"):"\u2014";
+  }
+
+  /* ---------- insights ---------- */
+  function recentDays(n){
+    var d=allDays();
+    // include today's live state
+    var live={date:TK,data:{marks:state.marks,score:score(state.marks)}};
+    d=d.filter(function(x){return x.date!==TK;});
+    d.push(live);
+    d.sort(function(a,b){return a.date<b.date?-1:1;});
+    return d.slice(-n);
+  }
+  function renderInsights(){
+    var days=recentDays(7).filter(function(d){return d.data&&score(d.data.marks||{})>0||d.date===TK&&score(state.marks)>0;});
+    var counted=recentDays(7).filter(function(d){return d.data&&d.data.marks&&Object.keys(d.data.marks).length;});
+    var lead=document.getElementById("insLead");
+    var note=document.getElementById("insNote");
+    var bars=document.getElementById("catBars");
+
+    var avgArr=[];
+    var catTot=CATS.map(function(){return 0;});
+    var catN=0;
+    counted.forEach(function(d){
+      var m=d.data.marks;
+      avgArr.push(score(m));
+      CATS.forEach(function(c,ci){ catTot[ci]+=catScore(ci,m); });
+      catN++;
+    });
+
+    if(catN===0){
+      lead.textContent="Your patterns will appear here.";
+      note.innerHTML="Complete a day or two of practice and Bond will show you where connection comes easily \u2014 and where a little attention would change the most.";
+      document.getElementById("avg7").textContent="\u2014";
+      document.getElementById("daysCount").textContent=allDays().length;
+      bars.innerHTML="";
+      return;
+    }
+
+    var avg=avgArr.reduce(function(a,b){return a+b;},0)/avgArr.length;
+    document.getElementById("avg7").innerHTML=(avg.toFixed(1))+'<small>/30</small>';
+    document.getElementById("daysCount").textContent=allDays().length;
+
+    var catAvg=catTot.map(function(t){return t/catN;});
+    var maxI=0,minI=0;
+    catAvg.forEach(function(v,i){ if(v>catAvg[maxI])maxI=i; if(v<catAvg[minI])minI=i; });
+
+    lead.textContent="Where your attention is landing.";
+    var strongName=CATS[maxI].t, weakName=CATS[minI].t;
+    var weakItems=CATS[minI].items.map(function(x){return x.x.toLowerCase();});
+    note.innerHTML="Your steadiest area is <b>"+strongName+"</b> \u2014 keep it effortless. "+
+      "The area that would reward attention most is <b>"+weakName+"</b> ("+
+      (catAvg[minI].toFixed(1))+"/3 on average). Tomorrow, pick just one move there: try \u201c"+
+      weakItems[0]+"\u201d. One deliberate practice in your weakest area lifts the whole relationship more than polishing a strong one.";
+
+    bars.innerHTML="";
+    CATS.forEach(function(c,ci){
+      var v=catAvg[ci], pct=Math.round(v/3*100);
+      var row=document.createElement("div");
+      row.className="brow";
+      row.innerHTML='<div class="nm">'+c.t+'</div>'+
+        '<div class="track"><i></i></div>'+
+        '<div class="vl">'+v.toFixed(1)+'</div>';
+      bars.appendChild(row);
+      requestAnimationFrame(function(){
+        row.querySelector("i").style.width=pct+"%";
+      });
+    });
+  }
+
+  /* ---------- journey ---------- */
+  function renderJourney(){
+    var days=allDays().filter(function(d){return d.date!==TK;});
+    var live={date:TK,data:{score:score(state.marks),journal:state.journal}};
+    if(score(state.marks)>0 || (load("day:"+TK))) days.push(live);
+    days.sort(function(a,b){return a.date<b.date?-1:1;});
+
+    var spark=document.getElementById("spark");
+    var log=document.getElementById("logList");
+    spark.innerHTML=""; log.innerHTML="";
+
+    if(!days.length){
+      spark.innerHTML='<div class="empty" style="margin:auto;">No days logged yet. Your journey begins with today.</div>';
+      return;
+    }
+    var view=days.slice(-21);
+    view.forEach(function(d){
+      var sc=(d.data&&d.data.score)||0;
+      var h=Math.max(3,Math.round(sc/30*100));
+      var col=document.createElement("div");
+      col.className="col"+(sc>=30?" perf":"");
+      var dd=d.date.slice(8);
+      col.innerHTML='<i style="height:0"></i><span>'+dd+'</span>';
+      col.title=d.date+" \u2014 "+(sc%1===0?sc:sc.toFixed(1))+"/30";
+      spark.appendChild(col);
+      requestAnimationFrame(function(){ col.querySelector("i").style.height=h+"%"; });
+    });
+
+    days.slice().reverse().forEach(function(d){
+      var sc=(d.data&&d.data.score)||0;
+      var pct=Math.round(sc/30*100);
+      var j=(d.data&&d.data.journal)?d.data.journal:"";
+      var row=document.createElement("div");
+      row.className="logrow";
+      var nice=fmtDate(d.date);
+      row.innerHTML='<div class="d">'+nice+
+        (j?'<br><small>\u201c'+escapeHtml(j.slice(0,90))+(j.length>90?"\u2026":"")+'\u201d</small>':'')+
+        '</div>'+
+        '<div class="s'+(sc>=26?" hi":"")+'">'+(sc%1===0?sc:sc.toFixed(1))+'/30 \u00b7 '+pct+'%</div>';
+      log.appendChild(row);
+    });
+  }
+  function fmtDate(s){
+    var p=s.split("-"); var d=new Date(p[0],p[1]-1,p[2]);
+    return d.toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"});
+  }
+  function escapeHtml(t){
+    return t.replace(/[&<>"]/g,function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];
+    });
+  }
+
+  /* ---------- toast ---------- */
+  var toastTimer;
+  function toast(msg,win){
+    var t=document.getElementById("toast");
+    t.textContent=msg;
+    t.classList.toggle("win",!!win);
+    t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(function(){ t.classList.remove("show"); },3200);
+  }
+
+  /* ---------- tabs ---------- */
+  document.querySelectorAll("nav.tabs button").forEach(function(b){
+    b.addEventListener("click",function(){
+      document.querySelectorAll("nav.tabs button").forEach(function(x){x.classList.remove("active");});
+      document.querySelectorAll(".panel").forEach(function(x){x.classList.remove("active");});
+      b.classList.add("active");
+      document.getElementById(b.dataset.tab).classList.add("active");
+      if(b.dataset.tab==="insights") renderInsights();
+      if(b.dataset.tab==="journey") renderJourney();
+      window.scrollTo({top:0,behavior:"smooth"});
+    });
+  });
+
+  /* ---------- buttons / autosave ---------- */
+  document.getElementById("saveBtn").addEventListener("click",function(){ saveDay(false); });
+  document.getElementById("resetDayBtn").addEventListener("click",function(){
+    if(!confirm("Clear all marks and the note for today?")) return;
+    state={marks:{},journal:""};
+    save("day:"+TK,{marks:{},journal:"",score:0,ts:Date.now()});
+    document.getElementById("journal").value="";
+    buildCats(); refresh(); updateStrip(); renderInsights(); renderJourney();
+    toast("Today cleared.");
+  });
+  document.getElementById("journal").addEventListener("input",function(){
+    state.journal=this.value;
+  });
+  // gentle autosave on changes
+  var autoTimer;
+  document.getElementById("catList")&&document.addEventListener("click",function(){
+    clearTimeout(autoTimer);
+    autoTimer=setTimeout(function(){ saveDay(true); },900);
+  });
+
+  /* ---------- init ---------- */
+  function init(){
+    var d=new Date();
+    document.getElementById("todayDate").textContent=
+      d.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});
+    document.getElementById("journal").value=state.journal||"";
+    buildCats();
+    refresh();
+    updateStrip();
+    renderInsights();
+    renderJourney();
+  }
+  init();
+})();
+</script>
+</body>
+</html>
